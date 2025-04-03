@@ -77,14 +77,42 @@
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
+  
   <form id="riftForm">
-    <input type="email" id="email" placeholder="Enter your email" required>
+    <input id="email" type="email" name="email" placeholder="Enter your email" required />
     <button type="submit">Enter the Rift</button>
     <p class="blurb">Rude Awakening is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
   </form>
+
   <div id="successMessage">
     <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
   </div>
 
   <script>
-    const API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMzc2NzVmYjJjMmJiOWE3MGZlYTJlYTc5MjZhMGU5NGRlYmM3ZmZkMzA3MmIzNjdiZGExNzkzZTMzYTEzNGE0ZDM2M2ZkMmE3YjYzZTJiYzYiLCJpYXQiOjE3NDM2NDQ0OTYuNDY3NjMzLCJuYmYiOjE3NDM2NDQ0OTYuNDY3NjM1LCJleHAiOjQ4OTkzMTgwOTYuNDYyMjg4LCJzdWIiOiIxNDM1MDczIiwic2NvcGVzIjpbXX0.rNcSu-E0aC_wM-IPLMZ19YA2Vo2X-6jBt_W6gObtXUIqTwmucW1keBB0i8W00nAIGg8zFCfhbtGB4Bmtc_UXo6IajEN6DinyS8G4LFAZ8puKr_RiLMc5tInjAedTTMMGhnRINa_ZzJ5nFwAfMVaIoazDyMg5P_saYo_mUFfmJx52cGfM98bBdwur5crtND-XxtInOQZETL7WlGAiYx6B4-oEXfiYljWrqmd2DE3-WfezmjlTe6t2ZflHMqhxlo9Sf
+    document.getElementById('riftForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+
+      try {
+        const response = await fetch("/.netlify/functions/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          document.getElementById('riftForm').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
+        } else {
+          alert("Signup failed. Please try again.");
+        }
+      } catch (error) {
+        alert("There was an error. Please try again.");
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
