@@ -8,39 +8,39 @@
     body {
       background-color: #0b0b0b;
       color: #e8e6e3;
-      font-family: 'Georgia', serif;
+      font-family: Georgia, serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
       min-height: 100vh;
+      padding: 2rem;
       background-image: url('https://kwkoch.com/bg-pattern.png');
       background-size: 300px;
     }
+
     h1 {
       font-size: 3rem;
       margin-bottom: 0.5rem;
       text-align: center;
       font-weight: bold;
     }
+
     p {
       font-size: 1.1rem;
       text-align: center;
       max-width: 600px;
     }
+
     .cover {
       margin: 2rem 0;
       box-shadow: 0 0 30px #422, inset 0 0 12px #000;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid #8c6239;
-    }
-    .cover img {
-      display: block;
-      max-width: 260px;
+      border-radius: 8px;
+      max-width: 280px;
+      width: 100%;
       height: auto;
     }
+
     form {
       display: flex;
       flex-direction: column;
@@ -49,6 +49,7 @@
       width: 100%;
       margin-top: 1rem;
     }
+
     input[type="email"] {
       padding: 0.75rem 1rem;
       font-size: 1rem;
@@ -56,31 +57,35 @@
       border: none;
       background-color: #1b1b1b;
       color: #f0f0f0;
-      box-shadow: inset 0 0 5px #000;
     }
+
     button {
       padding: 0.75rem;
-      background: linear-gradient(to bottom, #f5d179, #bb8c1d);
-      color: #1a0e00;
+      background: linear-gradient(to bottom, #f8d477, #e1aa3b);
+      color: #000;
       font-size: 1rem;
       font-weight: bold;
-      border: none;
+      border: 1px solid #d69e2e;
       border-radius: 6px;
+      box-shadow: 0 0 8px #f8d477, inset 0 0 3px #fff;
       cursor: pointer;
-      box-shadow: 0 0 12px #bb8c1d;
       transition: all 0.3s ease;
     }
+
     button:hover {
-      background: linear-gradient(to bottom, #ffe9a9, #e0a72f);
-      box-shadow: 0 0 20px #ffc107;
+      background: linear-gradient(to bottom, #e1aa3b, #c28e21);
+      box-shadow: 0 0 12px #e1aa3b, inset 0 0 4px #fff;
     }
+
     .blurb {
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
       font-style: italic;
       text-align: center;
       color: #ccc;
+      max-width: 600px;
     }
+
     #successMessage {
       display: none;
       margin-top: 2rem;
@@ -89,28 +94,23 @@
       color: #e0ffe7;
       text-align: center;
       border-radius: 6px;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara... Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
+  
+  <img src="./book-cover.webp" alt="Rude Awakening Cover" class="cover" />
 
-  <div class="cover">
-    <img src="./book-cover.webp" alt="Rude Awakening Cover" />
-  </div>
-
-  <form id="riftForm" method="POST" action="/.netlify/functions/subscribe" onsubmit="return showSuccessMessage(event)">
+  <form id="riftForm" method="POST" action="https://kwkoch.com/.netlify/functions/subscribe" onsubmit="return showSuccessMessage(event)">
     <input type="email" name="email" placeholder="Enter your email" required>
     <button type="submit">Enter the Rift</button>
-    <p class="blurb">
-      <em>Rude Awakening</em> is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.
-    </p>
+    <p class="blurb"><em>Rude Awakening</em> is coming soon. By signing up, you’ll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
   </form>
 
   <div id="successMessage">
-    Welcome, Riftborn. Check your email for your first tale from Solmara.
+    <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
   </div>
 
   <script>
