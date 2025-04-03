@@ -10,7 +10,6 @@ exports.handler = async (event) => {
     }
 
     const { email } = JSON.parse(event.body);
-
     if (!email) {
       return {
         statusCode: 400,
@@ -18,15 +17,31 @@ exports.handler = async (event) => {
       };
     }
 
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
+    };
+
+    // STEP 1: Check if subscriber already exists
+    const checkRes = await fetch(`https://connect.mailerlite.com/api/subscribers/${email}`, {
+      method: "GET",
+      headers,
+    });
+
+    if (checkRes.status === 200) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: "Already subscribed." }),
+      };
+    }
+
+    // STEP 2: Create new subscriber
     const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
-      },
+      headers,
       body: JSON.stringify({
         email,
-        groups: ["150427646489003530"], // Replace with your group ID if it changes
+        groups: ["150427646489003530"],
       }),
     });
 
@@ -35,7 +50,7 @@ exports.handler = async (event) => {
     if (!response.ok) {
       return {
         statusCode: response.status,
-        body: JSON.stringify({ message: data.message, errors: data.errors, subscriber: data.subscriber }),
+        body: JSON.stringify({ message: data.message, errors: data.errors }),
       };
     }
 
