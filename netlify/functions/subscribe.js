@@ -10,52 +10,30 @@ exports.handler = async (event) => {
   }
 
   const { email } = JSON.parse(event.body);
-  const API_KEY = process.env.MAILERLITE_API_KEY;
+  const API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDM0OTllMjEzNDdmZWZlNTQ5ZWZlN2MyYjAwMDE0NDk1YjIwNWU1ZmZiODYwMmZjMDZiZmUwNTE1NzgxZTg4ZDc2NWZjZDk3M2UxY2RhNWIiLCJpYXQiOjE3NDM2NDU0MjQuNTU4OTAyLCJuYmYiOjE3NDM2NDU0MjQuNTU4OTA1LCJleHAiOjQ4OTkzMTkwMjQuNTU0MDIzLCJzdWIiOiIxNDM1MDczIiwic2NvcGVzIjpbXX0.YWd4liPKmoet9_trbnCn6dlh-CZ4qNJRgZqz3FRmx3KE8P7ZLo1OyhOE9ZoLJsOY2pTXoDFy_PlpZU_h1erk0kLkVF2Q7ivetDL_Ht70BmQGEBsB-ETEwPIZPzSmM6kK8u7KqoSSvonJ-Ry4WkuOUKpBgrmdfXtYg7IrR5OLx76OWrhVHZDpJ6hyWM0SCabud6PGg4G1OdXwxbXRawS8pCXxJCgbu3qSItIY4I8Jn_k8xP5LVgOrzn-1vWusFlby52Hhmj7XSxN0iEg1zcvOYF3Bh3mbNnLQ7HkDxJQZNwDbNt0kh8MjgYhQlTNmHonfUXMsq-rOCRz3iB44Nn5TVOp90USFmza2Xw47hodbjRQKxw8OmHOLzFthXJ2RqdrtcbT4PyWGVzCpP8FVRMDCKtqiTtXrTMYuAbfyQ3TVyrkKLEeZyCx6RoLtczBoB4g7vWBe40X5SDEB0hh-VAciRZWoJbBjLwlGv-T4kBQIcvduaD7Of7IhRjlnaWex_-AKaF3PT77h5DldvPRwbpWdAwbAE8gz7BRKmk8fGY8fvmP3avpO_PMZR6evG4DU1r8pTdBbh86C0HKaUy3LDZ8hYy3xtAZnhSDFrf6-2jCylvYJYbfTymAtasSJ_YicaV_YpXBPsA0aCJl5QIe8MNtZXFCzbDbyWHzB3m1DI6J64NE";
   const GROUP_ID = "150427646489003530";
 
   try {
-    const createRes = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
+    const res = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "X-MailerLite-ApiKey": API_KEY,
+        "Authorization": `Bearer ${API_KEY}`,
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ email, type: "active" }),
+      body: JSON.stringify({
+        email,
+        groups: [GROUP_ID],
+      })
     });
 
-    const createData = await createRes.json();
+    const data = await res.json();
 
-    // ⛔ Log failure details
-    if (!createRes.ok || createData.error) {
-      console.error("Create failed", createData);
+    if (!res.ok) {
+      console.error("MailerLite API error:", data);
       return {
         statusCode: 500,
         headers: { "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ success: false, error: createData }),
-      };
-    }
-
-    // ✅ Add subscriber to group
-    const groupRes = await fetch(
-      `https://api.mailerlite.com/api/v2/groups/${GROUP_ID}/subscribers`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-MailerLite-ApiKey": API_KEY,
-        },
-        body: JSON.stringify({ email }),
-      }
-    );
-
-    const groupData = await groupRes.json();
-
-    if (!groupRes.ok || groupData.error) {
-      console.error("Group add failed", groupData);
-      return {
-        statusCode: 500,
-        headers: { "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ success: false, error: groupData }),
+        body: JSON.stringify({ success: false, error: data }),
       };
     }
 
@@ -64,12 +42,12 @@ exports.handler = async (event) => {
       headers: { "Access-Control-Allow-Origin": "*" },
       body: JSON.stringify({ success: true }),
     };
-  } catch (error) {
-    console.error("Unexpected error", error);
+  } catch (err) {
+    console.error("Unexpected error:", err);
     return {
       statusCode: 500,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ success: false, error: error.message }),
+      body: JSON.stringify({ success: false, error: err.message }),
     };
   }
 };
