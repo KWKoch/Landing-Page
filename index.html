@@ -77,41 +77,36 @@
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
-  
   <form id="riftForm">
-    <input id="email" type="email" name="email" placeholder="Enter your email" required />
+    <input type="email" id="email" placeholder="Enter your email" required />
     <button type="submit">Enter the Rift</button>
     <p class="blurb">Rude Awakening is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
   </form>
-
   <div id="successMessage">
     <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
   </div>
 
   <script>
-    document.getElementById('riftForm').addEventListener('submit', async function(e) {
+    document.getElementById('riftForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value;
 
-      try {
-        const response = await fetch("/.netlify/functions/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
+      const response = await fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (result.success) {
-          document.getElementById('riftForm').style.display = 'none';
-          document.getElementById('successMessage').style.display = 'block';
-        } else {
-          console.error("Backend error:", result.error);
-          alert("Signup failed: " + (result.error?.message || JSON.stringify(result.error)));
-        }
-      } catch (error) {
-        console.error("Request failed:", error);
-        alert("There was an error. Please try again.");
+      if (response.ok) {
+        document.getElementById('riftForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+      } else {
+        alert('Signup failed: ' + (result?.message || 'Unknown error'));
+        console.error("Backend error:", result);
       }
     });
   </script>
