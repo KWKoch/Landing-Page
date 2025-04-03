@@ -106,11 +106,12 @@
           document.getElementById('riftForm').style.display = 'none';
           document.getElementById('successMessage').style.display = 'block';
         } else {
-          alert("Signup failed. Please try again.");
+          console.error("Backend error:", result.error);
+          alert("Signup failed: " + (result.error?.message || JSON.stringify(result.error)));
         }
       } catch (error) {
+        console.error("Request failed:", error);
         alert("There was an error. Please try again.");
-        console.error(error);
       }
     });
   </script>
