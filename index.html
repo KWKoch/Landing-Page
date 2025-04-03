@@ -8,125 +8,79 @@
     body {
       background-color: #0b0b0b;
       color: #e8e6e3;
-      font-family: Georgia, serif;
+      font-family: 'Georgia', serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      justify-content: center;
       padding: 2rem;
-      overflow: hidden;
+      min-height: 100vh;
+      background-image: url('https://kwkoch.com/bg-pattern.png');
+      background-size: 300px;
     }
-
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 0.5rem;
       text-align: center;
+      font-weight: bold;
     }
-
     p {
       font-size: 1.1rem;
       text-align: center;
       max-width: 600px;
     }
-
-    /* Glowing halo + realistic cover styling */
-    .book-wrapper {
-      position: relative;
-      margin: 2rem auto;
-      perspective: 1000px;
+    .cover {
+      margin: 2rem 0;
+      box-shadow: 0 0 30px #422, inset 0 0 12px #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #8c6239;
     }
-
-    .book-wrapper::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 340px;
-      height: 520px;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(105, 255, 220, 0.2), transparent 70%);
-      animation: pulseGlow 4s ease-in-out infinite;
-      z-index: 0;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.05); }
-    }
-
-    .book {
-      position: relative;
-      width: 280px;
+    .cover img {
+      display: block;
+      max-width: 260px;
       height: auto;
-      transform: rotateY(-10deg);
-      box-shadow: -12px 12px 25px rgba(0, 0, 0, 0.6);
-      border: 4px solid #a36f2d;
-      border-radius: 6px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      z-index: 1;
     }
-
-    .book:hover {
-      transform: rotateY(0deg);
-      box-shadow: -6px 6px 18px rgba(0, 0, 0, 0.8);
-    }
-
     form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       max-width: 400px;
       width: 100%;
-      margin-top: 2rem;
-      z-index: 2;
+      margin-top: 1rem;
     }
-
     input[type="email"] {
       padding: 0.75rem 1rem;
       font-size: 1rem;
       border-radius: 6px;
-      border: 1px solid #333;
+      border: none;
       background-color: #1b1b1b;
       color: #f0f0f0;
+      box-shadow: inset 0 0 5px #000;
     }
-
     button {
       padding: 0.75rem;
-      background: linear-gradient(145deg, #f6c34b, #d9a630);
-      color: #1b1b1b;
+      background: linear-gradient(to bottom, #f5d179, #bb8c1d);
+      color: #1a0e00;
       font-size: 1rem;
       font-weight: bold;
-      font-family: Georgia, serif;
-      border: 2px solid #a0741f;
+      border: none;
       border-radius: 6px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4),
-                  inset 0 1px 1px rgba(255, 255, 255, 0.3),
-                  inset 0 -1px 1px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      animation: shimmer 2.8s infinite ease-in-out;
-      transition: all 0.25s ease;
+      box-shadow: 0 0 12px #bb8c1d;
+      transition: all 0.3s ease;
     }
-
     button:hover {
-      background: linear-gradient(145deg, #eeb84b, #c2922c);
-      transform: translateY(-1px);
+      background: linear-gradient(to bottom, #ffe9a9, #e0a72f);
+      box-shadow: 0 0 20px #ffc107;
     }
-
-    @keyframes shimmer {
-      0%, 100% { box-shadow: 0 0 8px rgba(246, 195, 75, 0.3); }
-      50% { box-shadow: 0 0 16px rgba(246, 195, 75, 0.7); }
-    }
-
     .blurb {
-      margin-top: 1rem;
-      font-size: 0.9rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
       font-style: italic;
       text-align: center;
       color: #ccc;
     }
-
     #successMessage {
       display: none;
       margin-top: 2rem;
@@ -135,67 +89,36 @@
       color: #e0ffe7;
       text-align: center;
       border-radius: 6px;
-    }
-
-    /* ✨ Ambient particles */
-    .fog {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      background: url('https://www.transparenttextures.com/patterns/foggy-birds.png');
-      opacity: 0.05;
-      animation: floatFog 60s linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes floatFog {
-      from { transform: translate(0, 0); }
-      to { transform: translate(-50%, -50%); }
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="fog"></div>
-
   <h1>Enter the Rift</h1>
-  <p>Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
-  
-  <div class="book-wrapper">
-    <img src="book-cover.webp" alt="Rude Awakening Cover" class="book" />
+  <p>Begin your journey into Solmara... Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
+
+  <div class="cover">
+    <img src="./book-cover.webp" alt="Rude Awakening Cover" />
   </div>
 
-  <form id="riftForm">
+  <form id="riftForm" method="POST" action="/.netlify/functions/subscribe" onsubmit="return showSuccessMessage(event)">
     <input type="email" name="email" placeholder="Enter your email" required>
     <button type="submit">Enter the Rift</button>
-    <p class="blurb">Rude Awakening is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
+    <p class="blurb">
+      <em>Rude Awakening</em> is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.
+    </p>
   </form>
 
   <div id="successMessage">
-    <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
+    Welcome, Riftborn. Check your email for your first tale from Solmara.
   </div>
 
   <script>
-    document.getElementById('riftForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const email = this.email.value;
-      const res = await fetch('/.netlify/functions/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const result = await res.json();
-      if (res.ok) {
-        this.style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
-      } else {
-        alert('Signup failed: ' + JSON.stringify(result));
-        console.log('Backend error:', result);
-      }
-    });
+    function showSuccessMessage(event) {
+      document.getElementById('riftForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      return true;
+    }
   </script>
 </body>
 </html>
