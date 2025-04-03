@@ -14,21 +14,21 @@ exports.handler = async (event) => {
   const GROUP_ID = "150427646489003530";
 
   try {
-    const res = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
+    const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${API_KEY}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
+        email: email,
         groups: [GROUP_ID],
-      })
+      }),
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       console.error("MailerLite API error:", data);
       return {
         statusCode: 500,
@@ -42,12 +42,12 @@ exports.handler = async (event) => {
       headers: { "Access-Control-Allow-Origin": "*" },
       body: JSON.stringify({ success: true }),
     };
-  } catch (err) {
-    console.error("Unexpected error:", err);
+  } catch (error) {
+    console.error("Unexpected error:", error);
     return {
       statusCode: 500,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ success: false, error: err.message }),
+      body: JSON.stringify({ success: false, error: error.message }),
     };
   }
 };
