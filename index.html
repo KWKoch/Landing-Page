@@ -33,12 +33,15 @@
     }
 
     .cover {
-      margin: 2rem 0;
-      box-shadow: 0 0 30px #422, inset 0 0 12px #000;
-      border-radius: 8px;
+      margin: 1.5rem 0;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      border-radius: 6px;
       max-width: 280px;
-      width: 100%;
-      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .cover:hover {
+      transform: scale(1.03);
     }
 
     form {
@@ -47,7 +50,6 @@
       gap: 1rem;
       max-width: 400px;
       width: 100%;
-      margin-top: 1rem;
     }
 
     input[type="email"] {
@@ -61,20 +63,20 @@
 
     button {
       padding: 0.75rem;
-      background: linear-gradient(to bottom, #f8d477, #e1aa3b);
+      background: linear-gradient(to bottom, #f8d778, #c9981b);
       color: #000;
       font-size: 1rem;
       font-weight: bold;
-      border: 1px solid #d69e2e;
+      border: none;
       border-radius: 6px;
-      box-shadow: 0 0 8px #f8d477, inset 0 0 3px #fff;
       cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 0 10px #f1b84788, inset 0 1px 0 #fff3;
     }
 
     button:hover {
-      background: linear-gradient(to bottom, #e1aa3b, #c28e21);
-      box-shadow: 0 0 12px #e1aa3b, inset 0 0 4px #fff;
+      background: linear-gradient(to bottom, #f1c14d, #a77810);
+      box-shadow: 0 0 12px #f1b847aa, inset 0 2px 0 #fff3;
     }
 
     .blurb {
@@ -83,7 +85,6 @@
       font-style: italic;
       text-align: center;
       color: #ccc;
-      max-width: 600px;
     }
 
     #successMessage {
@@ -100,13 +101,13 @@
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara... Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
-  
-  <img src="./book-cover.webp" alt="Rude Awakening Cover" class="cover" />
 
-  <form id="riftForm" method="POST" action="https://kwkoch.com/.netlify/functions/subscribe" onsubmit="return showSuccessMessage(event)">
-    <input type="email" name="email" placeholder="Enter your email" required>
+  <img src="book-cover.webp" alt="Rude Awakening Cover" class="cover" />
+
+  <form id="riftForm" method="post" action="/.netlify/functions/subscribe" onsubmit="return showSuccessMessage(event)">
+    <input type="email" name="email" placeholder="Enter your email" required />
     <button type="submit">Enter the Rift</button>
-    <p class="blurb"><em>Rude Awakening</em> is coming soon. By signing up, you’ll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
+    <p class="blurb"><em>Rude Awakening</em> is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
   </form>
 
   <div id="successMessage">
@@ -115,9 +116,33 @@
 
   <script>
     function showSuccessMessage(event) {
-      document.getElementById('riftForm').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'block';
-      return true;
+      event.preventDefault();
+      const form = document.getElementById("riftForm");
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: "POST",
+        body: JSON.stringify({ email: formData.get("email") }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          console.error("Backend error:", data);
+          alert("Signup failed: " + (data.message || "Unknown error"));
+        } else {
+          form.style.display = 'none';
+          document.getElementById("successMessage").style.display = "block";
+        }
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        alert("Something went wrong. Please try again.");
+      });
+
+      return false;
     }
   </script>
 </body>
