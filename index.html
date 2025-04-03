@@ -90,13 +90,17 @@
       e.preventDefault();
       const email = document.getElementById('email').value;
 
-      const response = await fetch("https://api.mailerlite.com/api/v2/groups/150427646489003530/subscribers", {
+      const response = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-MailerLite-ApiKey": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMzc2NzVmYjJjMmJiOWE3MGZlYTJlYTc5MjZhMGU5NGRlYmM3ZmZkMzA3MmIzNjdiZGExNzkzZTMzYTEzNGE0ZDM2M2ZkMmE3YjYzZTJiYzYiLCJpYXQiOjE3NDM2NDQ0OTYuNDY3NjMzLCJuYmYiOjE3NDM2NDQ0OTYuNDY3NjM1LCJleHAiOjQ4OTkzMTgwOTYuNDYyMjg4LCJzdWIiOiIxNDM1MDczIiwic2NvcGVzIjpbXX0.rNcSu-E0aC_wM-IPLMZ19YA2Vo2X-6jBt_W6gObtXUIqTwmucW1keBB0i8W00nAIGg8zFCfhbtGB4Bmtc_UXo6IajEN6DinyS8G4LFAZ8puKr_RiLMc5tInjAedTTMMGhnRINa_ZzJ5nFwAfMVaIoazDyMg5P_saYo_mUFfmJx52cGfM98bBdwur5crtND-XxtInOQZETL7WlGAiYx6B4-oEXfiYljWrqmd2DE3-WfezmjlTe6t2ZflHMqhxlo9SfCLdh43v6foylFnRvGdvWbiTK2ydjNWa7zIU878jhMhGQFenAyvLU9XMQvjWo_FQJehjzqF3z2HDvUt7iKPSv-t_uF7_vJ6RDtuZQFA8UOxGtNkgAOIs7n0IAwDuHooHdhIN2yx3j8DBN9Y39EmBOzMYcbXJPhhVgzHM_BKb1DY6XPtoXNbKSBJmwl6QBOPwjLwwlONxO9qJd_BBrMIX7wKAE-UYa6P4IIsQCN6BIoZGmScGPb0ReWGdN9CSLi1vjCfnDusA7Hrcsg2jY-asnu0guVwnN50EqZultPVZY2IAcJBliYJa7mojS_8jZSe7EXefeLAIfVoQhfNNjXDl1udFGVBWk3jzuVl8ryPBnrpZxBLzbDVlHIgYsqnjdyvwVq8xBvpr8ciYahBhPCp46B4kJvZQTNiBzYJB3hNhgqs"
         },
-        body: JSON.stringify({ email: email })
+        body: JSON.stringify({
+          email: email,
+          type: "active",
+          groups: [150427646489003530]
+        })
       });
 
       if (response.ok) {
