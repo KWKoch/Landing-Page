@@ -25,15 +25,17 @@ exports.handler = async (event) => {
 
     const createData = await createRes.json();
 
-    if (!createRes.ok) {
-      console.error("Create subscriber error:", createData);
+    // ⛔ Log failure details
+    if (!createRes.ok || createData.error) {
+      console.error("Create failed", createData);
       return {
-        statusCode: createRes.status,
+        statusCode: 500,
         headers: { "Access-Control-Allow-Origin": "*" },
         body: JSON.stringify({ success: false, error: createData }),
       };
     }
 
+    // ✅ Add subscriber to group
     const groupRes = await fetch(
       `https://api.mailerlite.com/api/v2/groups/${GROUP_ID}/subscribers`,
       {
@@ -48,10 +50,10 @@ exports.handler = async (event) => {
 
     const groupData = await groupRes.json();
 
-    if (!groupRes.ok) {
-      console.error("Group add error:", groupData);
+    if (!groupRes.ok || groupData.error) {
+      console.error("Group add failed", groupData);
       return {
-        statusCode: groupRes.status,
+        statusCode: 500,
         headers: { "Access-Control-Allow-Origin": "*" },
         body: JSON.stringify({ success: false, error: groupData }),
       };
@@ -63,7 +65,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error("Unhandled error:", error);
+    console.error("Unexpected error", error);
     return {
       statusCode: 500,
       headers: { "Access-Control-Allow-Origin": "*" },
