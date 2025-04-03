@@ -64,6 +64,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
+      width: 280px;
     }
 
     button:hover {
@@ -90,9 +91,13 @@
     />
   </div>
 
-  <form id="subscribe-form">
-    <input type="email" id="email" placeholder="Enter your email" required />
-    <br />
+  <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
+    <input 
+      type="email" 
+      id="email" 
+      placeholder="Enter your email" 
+      required 
+    />
     <button type="submit">Enter the Rift</button>
     <div id="message"></div>
   </form>
