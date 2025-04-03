@@ -4,6 +4,20 @@
   "description": "Netlify function to subscribe users via MailerLite",
   "main": "index.js",
   "dependencies": {
-    "node-fetch": "^2.6.7"
-  }
+    "node-fetch": "^2.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KWKoch/Landing-Page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KWKoch/Landing-Page/issues"
+  },
+  "homepage": "https://github.com/KWKoch/Landing-Page#readme"
 }
