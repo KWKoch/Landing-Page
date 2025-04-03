@@ -77,7 +77,7 @@
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
-  <form id="riftForm" method="post" action="https://assets.mailerlite.com/jsonp/1422367/forms/150620972369577324/subscribe" target="hidden_iframe" onsubmit="return showSuccessMessage(event)">
+  <form id="riftForm" method="post" action="https://assets.mailerlite.com/jsonp/1422367/forms/150620972369577324/subscribe" target="hidden_iframe" onsubmit="showSuccessMessage()">
     <input type="email" name="fields[email]" placeholder="Enter your email" required>
     <button type="submit">Enter the Rift</button>
     <p class="blurb">Rude Awakening is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
@@ -87,9 +87,11 @@
     <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
   </div>
   <script>
-    function showSuccessMessage(event) {
-      document.getElementById('riftForm').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'block';
+    function showSuccessMessage() {
+      setTimeout(function () {
+        document.getElementById('riftForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+      }, 500); // Delay to allow form to submit first
       return true;
     }
   </script>
