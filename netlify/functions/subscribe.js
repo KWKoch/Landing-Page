@@ -4,9 +4,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers: { "Access-Control-Allow-Origin": "*" },
       body: "Method Not Allowed",
     };
   }
@@ -16,8 +14,7 @@ exports.handler = async (event) => {
   const GROUP_ID = "150427646489003530";
 
   try {
-    // Step 1 – Create subscriber
-    const createResponse = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
+    const createRes = await fetch("https://api.mailerlite.com/api/v2/subscribers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,15 +23,18 @@ exports.handler = async (event) => {
       body: JSON.stringify({ email, type: "active" }),
     });
 
-    const createData = await createResponse.json();
+    const createData = await createRes.json();
 
-    if (!createResponse.ok) {
-      console.error("Failed to create subscriber:", createData);
-      throw new Error("Create subscriber failed");
+    if (!createRes.ok) {
+      console.error("Create subscriber error:", createData);
+      return {
+        statusCode: createRes.status,
+        headers: { "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify({ success: false, error: createData }),
+      };
     }
 
-    // Step 2 – Add subscriber to group
-    const groupResponse = await fetch(
+    const groupRes = await fetch(
       `https://api.mailerlite.com/api/v2/groups/${GROUP_ID}/subscribers`,
       {
         method: "POST",
@@ -46,28 +46,28 @@ exports.handler = async (event) => {
       }
     );
 
-    const groupData = await groupResponse.json();
+    const groupData = await groupRes.json();
 
-    if (!groupResponse.ok) {
-      console.error("Failed to add to group:", groupData);
-      throw new Error("Add to group failed");
+    if (!groupRes.ok) {
+      console.error("Group add error:", groupData);
+      return {
+        statusCode: groupRes.status,
+        headers: { "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify({ success: false, error: groupData }),
+      };
     }
 
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers: { "Access-Control-Allow-Origin": "*" },
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error("MailerLite signup error:", error);
+    console.error("Unhandled error:", error);
     return {
       statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({ success: false, message: error.message }),
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ success: false, error: error.message }),
     };
   }
 };
