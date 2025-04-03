@@ -16,16 +16,28 @@
       min-height: 100vh;
       padding: 2rem;
     }
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
       text-align: center;
     }
+
     p {
       font-size: 1.1rem;
       text-align: center;
       max-width: 600px;
     }
+
+    .cover {
+      width: 250px;
+      height: auto;
+      margin: 2rem auto;
+      border: 3px solid #f1b847;
+      box-shadow: 0 0 20px rgba(241, 184, 71, 0.3);
+      border-radius: 8px;
+    }
+
     form {
       display: flex;
       flex-direction: column;
@@ -34,28 +46,40 @@
       width: 100%;
       margin-top: 2rem;
     }
+
     input[type="email"] {
       padding: 0.75rem 1rem;
       font-size: 1rem;
       border-radius: 6px;
-      border: none;
+      border: 1px solid #333;
       background-color: #1b1b1b;
       color: #f0f0f0;
     }
+
     button {
       padding: 0.75rem;
-      background-color: #f1b847;
-      color: #000;
+      background: linear-gradient(145deg, #f6c34b, #d9a630);
+      color: #1b1b1b;
       font-size: 1rem;
       font-weight: bold;
-      border: none;
+      font-family: Georgia, serif;
+      border: 2px solid #a0741f;
       border-radius: 6px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                  inset 0 -1px 1px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.25s ease;
     }
+
     button:hover {
-      background-color: #d6a427;
+      background: linear-gradient(145deg, #eeb84b, #c2922c);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5),
+                  inset 0 1px 1px rgba(255, 255, 255, 0.3),
+                  inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+      transform: translateY(-1px);
     }
+
     .blurb {
       margin-top: 1rem;
       font-size: 0.9rem;
@@ -63,6 +87,7 @@
       text-align: center;
       color: #ccc;
     }
+
     #successMessage {
       display: none;
       margin-top: 2rem;
@@ -72,52 +97,42 @@
       text-align: center;
       border-radius: 6px;
     }
-    #errorMessage {
-      display: none;
-      margin-top: 2rem;
-      padding: 1rem;
-      background-color: #4b1c1c;
-      color: #ffdddd;
-      text-align: center;
-      border-radius: 6px;
-    }
   </style>
 </head>
 <body>
   <h1>Enter the Rift</h1>
   <p>Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.</p>
+  
+  <!-- Optional Book Cover -->
+  <img src="cover-placeholder.jpg" alt="Book Cover" class="cover" />
+
   <form id="riftForm">
-    <input type="email" id="email" placeholder="Enter your email" required>
+    <input type="email" name="email" placeholder="Enter your email" required>
     <button type="submit">Enter the Rift</button>
-    <p class="blurb">By signing up, you'll receive the first story upon release—plus exclusive lore drops and early access to the unfolding saga.</p>
+    <p class="blurb">Rude Awakening is coming soon. By signing up, you'll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
   </form>
+
   <div id="successMessage">
-    <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your inbox.
+    <strong>Welcome, Riftborn.</strong><br>Your story begins now. Check your email for your first tale from Solmara.
   </div>
-  <div id="errorMessage">
-    <strong>Something went wrong.</strong><br>Please try again or contact support.
-  </div>
+
   <script>
-    document.getElementById('riftForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      try {
-        const res = await fetch('/.netlify/functions/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          document.getElementById('riftForm').style.display = 'none';
-          document.getElementById('successMessage').style.display = 'block';
-        } else {
-          console.error('Backend error:', data);
-          document.getElementById('errorMessage').style.display = 'block';
-        }
-      } catch (err) {
-        console.error('Network error:', err);
-        document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('riftForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = this.email.value;
+      const res = await fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+      } else {
+        alert('Signup failed: ' + JSON.stringify(result));
+        console.log('Backend error:', result);
       }
     });
   </script>
