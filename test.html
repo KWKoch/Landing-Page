@@ -120,9 +120,8 @@
 
         const result = await response.json();
         if (response.ok) {
-          message.textContent = 'Success! Your download will begin.';
+          message.textContent = 'Success! Check your inbox.';
           document.getElementById('email').value = '';
-          // ✅ Trigger download on success
           window.location.href = "https://www.dropbox.com/scl/fi/bzgfhq8e6w5ai7w7cl08o/RUDE-AWAKENING-COVER.png?rlkey=dzvkrnt0x6xcp6x97loyx8ocf&st=9wm9ezpj&dl=1";
         } else {
           message.textContent = result.error?.message || 'Signup failed.';
