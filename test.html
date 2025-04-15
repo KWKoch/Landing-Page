@@ -1,29 +1,56 @@
-document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message');
-  message.textContent = 'Submitting...';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rude Awakening Download</title>
+</head>
+<body style="font-family: sans-serif; background: #111; color: #eee; text-align: center; padding: 5em;">
+  <h1>Get Rude Awakening</h1>
+  <p>Enter your email to receive the free book:</p>
+  <form id="subscribe-form" style="margin-top: 2em;">
+    <input 
+      type="email" 
+      id="email" 
+      placeholder="Enter your email" 
+      required 
+      style="padding: 0.5em; width: 300px;"
+    />
+    <br/><br/>
+    <button type="submit" style="padding: 0.75em 2em; font-size: 1em;">Download</button>
+    <div id="message" style="margin-top: 1em;"></div>
+  </form>
 
-  try {
-    const response = await fetch('/.netlify/functions/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+  <script>
+    document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message');
+      message.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch('/.netlify/functions/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const result = await response.json();
+        const errorMsg = result?.error?.message?.toLowerCase?.() || "";
+
+        if (errorMsg.includes("already") || errorMsg.includes("exists")) {
+          message.textContent = "You're already subscribed!";
+        } else if (response.ok && !result.error) {
+          message.textContent = 'Success! Your download will begin.';
+          document.getElementById('email').value = '';
+          window.location.href = "https://www.dropbox.com/scl/fi/bzgfhq8e6w5ai7w7cl08o/RUDE-AWAKENING-COVER.png?rlkey=dzvkrnt0x6xcp6x97loyx8ocf&st=9wm9ezpj&dl=1";
+        } else {
+          message.textContent = result.error?.message || 'Signup failed.';
+        }
+      } catch (err) {
+        message.textContent = 'An error occurred. Try again.';
+      }
     });
-
-    const result = await response.json();
-
-    // ✅ New check for "already exists"
-    if (result.error && result.error.message?.includes('already exists')) {
-      message.textContent = "You're already subscribed!";
-    } else if (response.ok) {
-      message.textContent = 'Success! Your download will begin.';
-      document.getElementById('email').value = '';
-      window.location.href = "https://www.dropbox.com/scl/fi/bzgfhq8e6w5ai7w7cl08o/RUDE-AWAKENING-COVER.png?rlkey=dzvkrnt0x6xcp6x97loyx8ocf&st=9wm9ezpj&dl=1";
-    } else {
-      message.textContent = result.error?.message || 'Signup failed.';
-    }
-  } catch (err) {
-    message.textContent = 'An error occurred. Try again.';
-  }
-});
+  </script>
+</body>
+</html>
