@@ -148,7 +148,9 @@
  <script>
   document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+
     const email = document.getElementById('email').value;
+    const format = document.getElementById('format').value;
     const message = document.getElementById('message');
     message.textContent = 'Submitting...';
 
@@ -160,18 +162,27 @@
       });
 
       const result = await response.json();
-      console.log("MailerLite response:", result); // You can remove this after testing
+      console.log("MailerLite response:", result);
 
       const msg = result?.message?.toLowerCase?.() || "";
 
       if (msg.includes("already")) {
         message.textContent = "You're already subscribed!";
       } else if (msg) {
-        message.textContent = msg; // Other messages like "Invalid email" etc.
+        message.textContent = msg;
       } else {
         message.textContent = 'Success! Your download will begin.';
         document.getElementById('email').value = '';
-        window.location.href = "https://www.dropbox.com/scl/fi/bzgfhq8e6w5ai7w7cl08o/RUDE-AWAKENING-COVER.png?rlkey=dzvkrnt0x6xcp6x97loyx8ocf&st=9wm9ezpj&dl=1";
+        document.getElementById('format').value = '';
+
+        // Redirect to selected format
+        const fileLinks = {
+          pdf: "https://yourdomain.com/downloads/Rude_Awakening_FINAL.pdf",
+          epub: "https://yourdomain.com/downloads/Rude_Awakening_FINAL.epub"
+        };
+
+        const downloadLink = fileLinks[format] || fileLinks.pdf;
+        window.location.href = downloadLink;
       }
     } catch (err) {
       console.error("Subscription error:", err);
@@ -179,6 +190,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
