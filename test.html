@@ -21,7 +21,7 @@
 
     body {
       font-family: Georgia, serif;
-      background: radial-gradient(#1a1a1a, #000000);
+      background: radial-gradient(#000000); /*fallback in case the video doesn't load */
       color: #f0f0f0;
       margin: 0;
       padding: 0;
@@ -111,7 +111,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted loop playsinline class="bg-video">
+  <video autoplay muted loop playsinline aria-hidden="true" class="bg-video">
   <source src="Smoke.mp4" type="video/mp4">
 </video>
 
