@@ -152,14 +152,14 @@
       });
 
       const result = await response.json();
-      console.log("MailerLite response:", result); // 🪵 See what’s really returned
+      console.log("MailerLite response:", result); // You can remove this after testing
 
-      const errorMsg = result?.error?.message?.toLowerCase?.() || "";
+      const msg = result?.message?.toLowerCase?.() || "";
 
-      if (errorMsg.includes("already")) {
+      if (msg.includes("already")) {
         message.textContent = "You're already subscribed!";
-      } else if (result.error) {
-        message.textContent = result.error.message || 'Signup failed.';
+      } else if (msg) {
+        message.textContent = msg; // Other messages like "Invalid email" etc.
       } else {
         message.textContent = 'Success! Your download will begin.';
         document.getElementById('email').value = '';
