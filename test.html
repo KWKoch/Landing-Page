@@ -152,6 +152,8 @@
       });
 
       const result = await response.json();
+      console.log("MailerLite response:", result); // 🪵 See what’s really returned
+
       const errorMsg = result?.error?.message?.toLowerCase?.() || "";
 
       if (errorMsg.includes("already")) {
@@ -159,15 +161,16 @@
       } else if (result.error) {
         message.textContent = result.error.message || 'Signup failed.';
       } else {
-        // ✅ Only reached if there's no error at all
         message.textContent = 'Success! Your download will begin.';
         document.getElementById('email').value = '';
         window.location.href = "https://www.dropbox.com/scl/fi/bzgfhq8e6w5ai7w7cl08o/RUDE-AWAKENING-COVER.png?rlkey=dzvkrnt0x6xcp6x97loyx8ocf&st=9wm9ezpj&dl=1";
       }
     } catch (err) {
+      console.error("Subscription error:", err);
       message.textContent = 'An error occurred. Try again.';
     }
   });
 </script>
+
 </body>
 </html>
