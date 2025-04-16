@@ -122,6 +122,18 @@ select#format:focus {
     0 0 16px rgba(212, 175, 55, 0.4);  /* stronger edge glow */
   border-radius: 6px;
 }
+.rainbow-glow {
+  animation: rainbowGlow 3s linear infinite;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+@keyframes rainbowGlow {
+  0%   { box-shadow: 0 0 12px 2px hsl(0, 100%, 60%); }
+  25%  { box-shadow: 0 0 12px 2px hsl(120, 100%, 60%); }
+  50%  { box-shadow: 0 0 12px 2px hsl(240, 100%, 60%); }
+  75%  { box-shadow: 0 0 12px 2px hsl(300, 100%, 60%); }
+  100% { box-shadow: 0 0 12px 2px hsl(360, 100%, 60%); }
+}
 
 
   </style>
@@ -142,7 +154,7 @@ select#format:focus {
     <h1>Enter the Rift. Begin the Saga.</h1>
     <p>Download <em>Rude Awakening</em>, the free prelude novella to <strong>Songs of Solmara</strong>.</p>
     <div class="cover">
-  <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
+  <img src="RUDE%20AWAKENING%20COVER.png" class="rainbow-glow" alt="Rude Awakening Cover">
 </div>
 
     
@@ -152,6 +164,7 @@ select#format:focus {
     id="email" 
     placeholder="Enter your email" 
     required 
+    class="rainbow-glow"
   />
 
   <select id="format" name="format" required style="margin: 1rem 0; padding: 0.8rem; width: 280px; font-size: 1rem; border-radius: 4px; background-color: #222; color: #eee; border: none;">
@@ -160,7 +173,7 @@ select#format:focus {
     <option value="epub">EPUB (For e-readers)</option>
   </select>
 
-  <button type="submit">Enter the <em>RIFT</em></button>
+  <button type="submit" class="rainbow-glow">Enter the <em>RIFT</em></button>
   <div id="message"></div>
 </form>
 
