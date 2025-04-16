@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Enter the Rift</title>
   <style>
+    .bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.6; /* adjust for brightness */
+  pointer-events: none;
+  filter: brightness(1.15) contrast(1.1);
+}
+
     body {
       background-color: #0b0b0b;
       color: #e0e6e3;
@@ -79,16 +92,18 @@
   </style>
 </head>
 <body>
+  <video autoplay muted loop playsinline aria-hidden="true" class="bg-video">
+  <source src="Smoke.mp4" type="video/mp4" />
+</video>
+
   <h1>Enter the Rift</h1>
   <p>
     Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.
   </p>
 
   <div class="cover">
-    <img 
-      src="file_00000000ee7c52308e060849b2b67003_conversation_id=67e475f4-81a8-800f-be77-aff911bb448f&message_id=6698c580-d1ba-4a66-a279-f6d2c6d894f6.webp.png" 
-      alt="Rude Awakening Cover" 
-    />
+    <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
+
   </div>
 
   <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
