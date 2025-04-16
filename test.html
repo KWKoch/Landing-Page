@@ -107,12 +107,16 @@
       padding: 2em;
       color: #888;
     }
-  .cover img {
+.cover img {
   width: 280px;
   height: auto;
-  box-shadow: 0 0 30px rgba(0, 255, 90, 0.2), inset 0 0 6px #000, 0 0 16px rgba(0, 255, 90, 0.3);
+  box-shadow: 
+    0 0 30px rgba(212, 175, 55, 0.2),   /* outer soft gold glow */
+    inset 0 0 6px #000,                /* inner dark edge for contrast */
+    0 0 16px rgba(212, 175, 55, 0.4);  /* stronger edge glow */
   border-radius: 6px;
 }
+
 
   </style>
 </head>
