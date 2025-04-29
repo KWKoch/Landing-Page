@@ -3,136 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enter the Rift</title>
+  <title>Songs of Solmara | Begin Your Journey</title>
   <style>
-    .bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.6; /* adjust for brightness */
-  pointer-events: none;
-  filter: brightness(1.15) contrast(1.1);
-}
-
     body {
-      background-color: #0b0b0b;
-      color: #e0e6e3;
-      font-family: 'Georgia', serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      min-height: 100vh;
-      background-image: url('https://kwkoch.com/bg-pattern.png');
-      background-size: 300px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
+      font-family: Georgia, serif;
+      background: radial-gradient(#000000);
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      font-weight: bold;
     }
-
-    p {
-      font-size: 1.1rem;
-      text-align: center;
-      max-width: 600px;
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.6;
+      pointer-events: none;
+      filter: brightness(1.15) contrast(1.1);
     }
-
-    .cover {
-      margin: 2rem 0;
+    header img {
+      max-width: 450px;
+      width: 90%;
+      margin: 2em auto 1em;
+      display: block;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
     }
-
-  .cover img {
-  width: 280px;
-  height: auto;
-  box-shadow: 
-    0 0 30px rgba(212, 175, 55, 0.8),   /* outer soft gold glow */
-    inset 0 0 6px #000,                /* inner dark edge for contrast */
-    0 0 16px rgba(212, 175, 55, 0.8);  /* stronger edge glow */
-  border-radius: 6px;
-}
-
-
-    button {
-      background: linear-gradient(to top, #c59a2f, #f6e27f);
-      border: 1px solid #8a6c1d;
-      box-shadow: inset 0 2px 4px #fff3, 0 0 10px #a7711b;
-      color: #222;
-      font-weight: bold;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
+    .cover img {
       width: 280px;
+      height: auto;
+      margin: 2em auto 1em;
+      border-radius: 6px;
+      box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.8),
+        inset 0 0 6px #000,
+        0 0 16px rgba(212, 175, 55, 0.8);
+      display: block;
     }
-
+    input, select, button {
+      width: 280px;
+      margin: 0.5em 0;
+      padding: 0.8em;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #1a1a1a;
+      color: #eee;
+    }
+    button {
+      background: linear-gradient(145deg, #8b6431, #d4af37);
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
     button:hover {
-      background: linear-gradient(to top, #f6e27f, #c59a2f);
-      box-shadow: 0 0 16px #f0c96b, inset 0 0 6px #fff;
-    }
-input[type="email"] {
-  padding: 1rem;
-  width: 280px;
-  font-size: 1.2rem;
-  border-radius: 6px;
-  border: none;
-  background-color: #1a1a1a;
-  color: #eee;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
-  text-align: center;
-}
-
-input[type="email"]:focus {
-  outline: none;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
-}
-
-    #message {
-      margin-top: 1rem;
-      font-size: 1rem;
+      background: linear-gradient(145deg, #d4af37, #8b6431);
     }
   </style>
 </head>
 <body>
   <video autoplay muted loop playsinline aria-hidden="true" class="bg-video">
-  <source src="Smoke.mp4" type="video/mp4" />
-</video>
+    <source src="Smoke.mp4" type="video/mp4" />
+  </video>
 
-  <h1>Enter the Rift</h1>
-  <p>
-    Begin your journey into Solmara… Sign up to receive <em>Rude Awakening</em>, the first story from <strong>Songs of Solmara</strong>.
-  </p>
+  <header>
+    <img src="Author%20Sig.png" alt="K.W. Koch">
+  </header>
 
-  <div class="cover">
-    <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
+  <div class="hero">
+    <h1>Enter the Rift. Begin the Saga.</h1>
+    <p>Download <em>Rude Awakening</em>, the free prelude novella to <strong>Songs of Solmara</strong>.</p>
 
+    <div class="cover">
+      <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
+    </div>
+
+    <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <select id="format" name="format" required>
+        <option value="" disabled selected>Choose format...</option>
+        <option value="pdf">PDF (Recommended)</option>
+        <option value="epub">EPUB (For e-readers)</option>
+      </select>
+      <button type="submit">Enter the Rift</button>
+      <div id="message" style="margin-top: 1rem;"></div>
+    </form>
   </div>
-
-  <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
-    <input 
-      type="email" 
-      id="email" 
-      placeholder="Enter your email" 
-      required 
-    />
-    <button type="submit">Enter the Rift</button>
-    <div id="message"></div>
-  </form>
-
-  <p><em>Rude Awakening</em> is coming soon. By signing up, you’ll be the first to receive the story upon release—along with exclusive lore drops and early access to the unfolding saga of Solmara.</p>
 
   <script>
     document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
       e.preventDefault();
+
       const email = document.getElementById('email').value;
+      const format = document.getElementById('format').value;
       const message = document.getElementById('message');
       message.textContent = 'Submitting...';
 
@@ -145,8 +111,15 @@ input[type="email"]:focus {
 
         const result = await response.json();
         if (response.ok) {
-          message.textContent = 'Success! Check your inbox.';
+          message.textContent = 'Success! Your download will begin.';
           document.getElementById('email').value = '';
+          document.getElementById('format').value = '';
+
+          const fileLinks = {
+            pdf: "https://www.dropbox.com/scl/fi/w87j3xibnmf3jhdui4umf/Rude-Awakening-2.pdf?rlkey=k5ce1kbga848gwwjtn8nqgioj&dl=1",
+            epub: "https://www.dropbox.com/scl/fi/vd050ngzhv83tl3o4025x/Rude_Awakening_PUBLISH.epub?rlkey=zlpobk2ieo3s9lmlfq7de8rmj&dl=1"
+          };
+          window.location.href = fileLinks[format] || fileLinks.pdf;
         } else {
           message.textContent = result.error?.message || 'Signup failed.';
         }
