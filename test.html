@@ -154,7 +154,7 @@ select#format:focus {
     <h1>Enter the Rift. Begin the Saga.</h1>
     <p>Download <em>Rude Awakening</em>, the free prelude novella to <strong>Songs of Solmara</strong>.</p>
     <div class="cover">
-  <img src="RUDE%20AWAKENING%20COVER.png" class="rainbow-glow" alt="Rude Awakening Cover">
+  <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
 </div>
 
     
@@ -163,8 +163,7 @@ select#format:focus {
     type="email" 
     id="email" 
     placeholder="Enter your email" 
-    required 
-    class="rainbow-glow"
+    required
   />
 
   <select id="format" name="format" required style="margin: 1rem 0; padding: 0.8rem; width: 280px; font-size: 1rem; border-radius: 4px; background-color: #222; color: #eee; border: none;">
@@ -173,7 +172,7 @@ select#format:focus {
     <option value="epub">EPUB (For e-readers)</option>
   </select>
 
-  <button type="submit" class="rainbow-glow">Enter the <em>RIFT</em></button>
+  <button type="submit">Enter the <em>RIFT</em></button>
   <div id="message"></div>
 </form>
 
@@ -229,8 +228,8 @@ select#format:focus {
 
         // Redirect to selected format
         const fileLinks = {
-          pdf: "/Rude Awakening - K.W. KOCH.pdf",
-          epub: "/Rude Awakening - K.W. KOCH.epub"
+          pdf: "https://www.dropbox.com/scl/fi/w87j3xibnmf3jhdui4umf/Rude-Awakening-2.pdf?rlkey=k5ce1kbga848gwwjtn8nqgioj&st=sv8b37f4&dl=1",
+          epub: "https://www.dropbox.com/scl/fi/vd050ngzhv83tl3o4025x/Rude_Awakening_PUBLISH.epub?rlkey=zlpobk2ieo3s9lmlfq7de8rmj&st=otcr8kuh&dl=1"
         };
 
         const downloadLink = fileLinks[format] || fileLinks.pdf;
@@ -246,4 +245,6 @@ select#format:focus {
 
 </body>
 </html>
+
+
 
