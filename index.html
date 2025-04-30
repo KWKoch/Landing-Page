@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -43,24 +43,28 @@
         0 0 16px rgba(212, 175, 55, 0.8);
       display: block;
     }
-    input, select, button {
+    input, button {
       width: 280px;
       margin: 0.5em 0;
       padding: 0.8em;
       font-size: 1.1rem;
       border-radius: 6px;
       border: none;
-      background-color: #1a1a1a;
-      color: #eee;
     }
     button {
       background: linear-gradient(145deg, #8b6431, #d4af37);
       font-weight: bold;
       cursor: pointer;
       transition: 0.3s;
+      color: #eee;
     }
     button:hover {
       background: linear-gradient(145deg, #d4af37, #8b6431);
+    }
+    #format-buttons button {
+      background: #1a1a1a;
+      border: 2px solid #d4af37;
+      color: #f0f0f0;
     }
     #tooltip {
       display: none;
@@ -95,14 +99,17 @@
 
     <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
       <input type="email" id="email" placeholder="Enter your email" required />
-      <div style="position: relative;">
-        <select id="format" name="format" required onmouseover="showTooltip(event)" onmouseout="hideTooltip()">
-          <option value="" disabled selected>Choose format...</option>
-          <option value="pdf" data-tooltip="Opens on any device or prints cleanly">PDF (Recommended)</option>
-          <option value="epub" data-tooltip="Best for Kindle, iPhone, iPad, Kobo, or any eReader">EPUB (For e-readers)</option>
-        </select>
-        <div id="tooltip"></div>
+
+      <div id="format-buttons" style="display: flex; flex-direction: column; gap: 1em; margin: 1em 0;">
+        <button type="button" onclick="selectFormat('pdf')">
+          📄 For any device or to print (PDF)
+        </button>
+        <button type="button" onclick="selectFormat('epub')">
+          📘 For Kindle, iPad, or eReader (EPUB)
+        </button>
+        <input type="hidden" id="format" name="format" required />
       </div>
+
       <button type="submit">Enter the Rift</button>
       <div id="message" style="margin-top: 1rem;"></div>
     </form>
@@ -116,6 +123,11 @@
       const format = document.getElementById('format').value;
       const message = document.getElementById('message');
       message.textContent = 'Submitting...';
+
+      if (!format) {
+        message.textContent = 'Please choose a format.';
+        return;
+      }
 
       try {
         const response = await fetch('/.netlify/functions/subscribe', {
@@ -143,22 +155,10 @@
       }
     });
 
-    const tooltip = document.getElementById('tooltip');
-    function showTooltip(e) {
-      const target = e.target;
-      const tip = target.dataset.tooltip;
-      if (target.tagName === 'OPTION' && tip) {
-        tooltip.textContent = tip;
-        tooltip.style.display = 'block';
-        const rect = target.getBoundingClientRect();
-        tooltip.style.left = (rect.left + window.scrollX + 20) + 'px';
-        tooltip.style.top = (rect.top + window.scrollY - 30) + 'px';
-      }
-    }
-    function hideTooltip() {
-      tooltip.style.display = 'none';
+    function selectFormat(format) {
+      document.getElementById("format").value = format;
+      document.getElementById("message").textContent = `Format selected: ${format.toUpperCase()}`;
     }
   </script>
 </body>
 </html>
-
