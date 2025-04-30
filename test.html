@@ -43,24 +43,30 @@
         0 0 16px rgba(212, 175, 55, 0.8);
       display: block;
     }
-    input, select, button {
-      width: 280px;
-      margin: 0.5em 0;
-      padding: 0.8em;
+    .button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      margin: 0.5em;
+      background: linear-gradient(145deg, #8b6431, #d4af37);
+      color: #111;
+      text-decoration: none;
+      font-weight: bold;
       font-size: 1.1rem;
       border-radius: 6px;
-      border: none;
-      background-color: #1a1a1a;
-      color: #eee;
+      box-shadow: inset 0 2px 4px #fff3, 0 0 10px #a7711b;
+      transition: all 0.3s ease;
     }
-    button {
-      background: linear-gradient(145deg, #8b6431, #d4af37);
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
+    .button:hover {
       background: linear-gradient(145deg, #d4af37, #8b6431);
+      box-shadow: 0 0 12px #f0c96b, inset 0 0 4px #fff;
+    }
+    .intro {
+      max-width: 700px;
+      margin: 3em auto 2em;
+      padding: 0 2em;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ccc;
     }
   </style>
 </head>
@@ -75,58 +81,26 @@
 
   <div class="hero">
     <h1>Enter the Rift. Begin the Saga.</h1>
-    <p>Download <em>Rude Awakening</em>, the free prelude novella to <strong>Songs of Solmara</strong>.</p>
+    <p><em>Rude Awakening</em> is now available — the prelude novella to the epic <strong>Songs of Solmara</strong>.</p>
 
     <div class="cover">
       <img src="RUDE%20AWAKENING%20COVER.png" alt="Rude Awakening Cover">
     </div>
 
-    <form id="subscribe-form" style="display: flex; flex-direction: column; align-items: center;">
-      <input type="email" id="email" placeholder="Enter your email" required />
-      <select id="format" name="format" required>
-        <option value="" disabled selected>Choose format...</option>
-        <option value="pdf">PDF (Recommended)</option>
-        <option value="epub">EPUB (For e-readers)</option>
-      </select>
-      <button type="submit">Enter the Rift</button>
-      <div id="message" style="margin-top: 1rem;"></div>
-    </form>
+    <a class="button" href="/downloads.html">📖 Begin Reading</a>
+    <a class="button" href="/test">🛒 Buy on Amazon</a>
   </div>
 
-  <script>
-    document.getElementById('subscribe-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const email = document.getElementById('email').value;
-      const format = document.getElementById('format').value;
-      const message = document.getElementById('message');
-      message.textContent = 'Submitting...';
-
-      try {
-        const response = await fetch('/.netlify/functions/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-          message.textContent = 'Success! Your download will begin.';
-          document.getElementById('email').value = '';
-          document.getElementById('format').value = '';
-
-          const fileLinks = {
-            pdf: "https://www.dropbox.com/scl/fi/w87j3xibnmf3jhdui4umf/Rude-Awakening-2.pdf?rlkey=k5ce1kbga848gwwjtn8nqgioj&dl=1",
-            epub: "https://www.dropbox.com/scl/fi/vd050ngzhv83tl3o4025x/Rude_Awakening_PUBLISH.epub?rlkey=zlpobk2ieo3s9lmlfq7de8rmj&dl=1"
-          };
-          window.location.href = fileLinks[format] || fileLinks.pdf;
-        } else {
-          message.textContent = result.error?.message || 'Signup failed.';
-        }
-      } catch (err) {
-        message.textContent = 'An error occurred. Try again.';
-      }
-    });
-  </script>
+  <div class="intro">
+    <p>
+      *Songs of Solmara* is a dark mythic fantasy saga about resonance, survival, and the forging of identity after the world shatters.
+    </p>
+    <p>
+      When the Rift tore open the skies, it pulled survivors from across time and worlds into a savage new land. There, they must fight to rebuild, reconnect — and confront the power within themselves that could either redeem or ruin everything they love.
+    </p>
+    <p>
+      <em>Rude Awakening</em> begins it all. The Riftborn rise from ruin. And your journey starts now.
+    </p>
+  </div>
 </body>
 </html>
